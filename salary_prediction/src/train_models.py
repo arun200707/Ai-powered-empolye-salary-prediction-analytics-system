@@ -158,21 +158,29 @@ def train_and_evaluate(
         t0 = time.time()
 
         if param_grid:
-            # GridSearchCV for hyperparameter tuning
-            grid = GridSearchCV(
-                estimator,
-                param_grid,
-                cv=cv,
-                scoring="r2",
-                n_jobs=-1,
-                refit=True,
-            )
-            grid.fit(X_train, y_train)
-            best_est = grid.best_estimator_
-            print(f"  Best params: {grid.best_params_}")
+            try:
+                # GridSearchCV for hyperparameter tuning
+                grid = GridSearchCV(
+                    estimator,
+                    param_grid,
+                    cv=cv,
+                    scoring="r2",
+                    n_jobs=-1,
+                    refit=True,
+                )
+                grid.fit(X_train, y_train)
+                best_est = grid.best_estimator_
+                print(f"  Best params: {grid.best_params_}")
+            except Exception as e:
+                # If XGBoost triggers sklearn tag incompatibilities, skip it entirely.
+                if name.lower() == "xgboost":
+                    print(f"  Skipping XGBoost due to training/tuning error: {type(e).__name__}: {e}")
+                    continue
+                raise
         else:
             best_est = estimator
             best_est.fit(X_train, y_train)
+
 
         train_time = time.time() - t0
 
