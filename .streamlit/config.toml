@@ -1,0 +1,7 @@
+[server]
+headless = true
+
+[app]
+# Streamlit Community Cloud uses this to locate the entrypoint inside the repo
+app_location = "salary_prediction/src/app.py"
+

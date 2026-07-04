@@ -241,9 +241,10 @@ if page == "🏠 Overview":
         fig.update_layout(**DARK_TEMPLATE["layout"],
                           xaxis_tickprefix="$", xaxis_tickformat=",.0f",
                           bargap=0.03, height=350, margin=dict(l=0,r=0,t=10,b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
 
     with col2:
+
         st.markdown('<div class="section-header">By Department</div>', unsafe_allow_html=True)
         dept_avg = df.groupby("department")["salary"].mean().sort_values(ascending=True)
         fig = go.Figure(go.Bar(
@@ -256,7 +257,7 @@ if page == "🏠 Overview":
         fig.update_layout(**DARK_TEMPLATE["layout"],
                           xaxis_tickprefix="$", xaxis_tickformat=",.0f",
                           height=350, margin=dict(l=0,r=60,t=10,b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # ── Row 2: Job title + Location ───────────────────────
     col1, col2 = st.columns(2)
@@ -273,7 +274,7 @@ if page == "🏠 Overview":
                           yaxis_tickprefix="$", yaxis_tickformat=",.0f",
                           showlegend=False, height=370,
                           margin=dict(l=0,r=0,t=10,b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
 
     with col2:
         st.markdown('<div class="section-header">Median Salary by Location</div>', unsafe_allow_html=True)
@@ -285,7 +286,7 @@ if page == "🏠 Overview":
                           yaxis_tickprefix="$", yaxis_tickformat=",.0f",
                           coloraxis_showscale=False,
                           height=370, margin=dict(l=0,r=0,t=10,b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # ── Best model banner ─────────────────────────────────
     if results_df is not None:
@@ -321,7 +322,7 @@ elif page == "📊 EDA":
                                color_discrete_sequence=["#4F8BF9"])
             fig.update_layout(**DARK_TEMPLATE["layout"],
                               xaxis_tickprefix="$", height=380)
-            st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
         with col2:
             st.subheader("Salary vs Experience")
@@ -331,9 +332,9 @@ elif page == "📊 EDA":
                              color_discrete_sequence=PLOTLY_COLORS)
             fig.update_layout(**DARK_TEMPLATE["layout"],
                               yaxis_tickprefix="$", height=380)
-            st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
 
-        st.subheader("Performance Score vs Salary (coloured by Experience)")
+        st.subheader
         fig = px.scatter(df, x="performance_score", y="salary",
                          color="years_experience",
                          color_continuous_scale="Viridis",
@@ -341,7 +342,7 @@ elif page == "📊 EDA":
                          labels={"performance_score": "Performance Score",
                                  "years_experience": "Yrs Exp"})
         fig.update_layout(**DARK_TEMPLATE["layout"], yaxis_tickprefix="$", height=380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with tab2:
         st.subheader("Correlation Heatmap")
@@ -350,7 +351,7 @@ elif page == "📊 EDA":
         fig = px.imshow(corr, text_auto=True, aspect="auto",
                         color_continuous_scale="RdBu_r", zmin=-1, zmax=1)
         fig.update_layout(**DARK_TEMPLATE["layout"], height=560)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)
 
         st.subheader("Top Correlations with Salary")
         corr_salary = (numeric_df.corr()["salary"]
@@ -362,7 +363,7 @@ elif page == "📊 EDA":
                      labels={"x": "Absolute Correlation", "y": "Feature"})
         fig.update_layout(**DARK_TEMPLATE["layout"],
                           coloraxis_showscale=False, height=420)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)
 
     with tab3:
         col1, col2 = st.columns(2)
@@ -375,7 +376,7 @@ elif page == "📊 EDA":
                               yaxis_tickprefix="$",
                               showlegend=False,
                               xaxis_tickangle=-30, height=420)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width=True)
 
         with col2:
             st.subheader("Avg Salary: Department × Job Title")
@@ -387,7 +388,7 @@ elif page == "📊 EDA":
                             color_continuous_scale="Viridis",
                             labels={"color": "Salary (K$)"})
             fig.update_layout(**DARK_TEMPLATE["layout"], height=420)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width=True)
 
         st.subheader("Salary Bubble Map by Location")
         loc_stats = df.groupby("location").agg(
@@ -400,7 +401,7 @@ elif page == "📊 EDA":
                          size_max=50)
         fig.update_layout(**DARK_TEMPLATE["layout"],
                           yaxis_tickprefix="$", height=400)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)
 
     with tab4:
         col1, col2 = st.columns(2)
@@ -412,7 +413,7 @@ elif page == "📊 EDA":
             fig.update_layout(**DARK_TEMPLATE["layout"],
                               yaxis_tickprefix="$",
                               showlegend=False, height=420)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width=True)
 
         with col2:
             st.subheader("Education Level vs Salary")
@@ -427,7 +428,7 @@ elif page == "📊 EDA":
             fig.update_layout(**DARK_TEMPLATE["layout"],
                               yaxis_tickprefix="$",
                               showlegend=False, height=420)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width=True)
 
         st.subheader("Age Distribution by Department")
         fig = px.violin(df, x="department", y="age",
@@ -436,7 +437,7 @@ elif page == "📊 EDA":
                         box=True)
         fig.update_layout(**DARK_TEMPLATE["layout"],
                           xaxis_tickangle=-30, showlegend=False, height=380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)
 
 
 # ══════════════════════════════════════════════════════════
@@ -475,7 +476,7 @@ elif page == "🤖 ML Models":
                          title="R² Score (higher = better)")
             fig.update_layout(**DARK_TEMPLATE["layout"],
                               coloraxis_showscale=False, height=350)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width=True)
 
         with col2:
             fig = px.bar(results_df.sort_values("RMSE", ascending=True),
@@ -485,7 +486,7 @@ elif page == "🤖 ML Models":
             fig.update_layout(**DARK_TEMPLATE["layout"],
                               xaxis_tickprefix="$",
                               coloraxis_showscale=False, height=350)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width=True)
 
         # Radar chart
         st.subheader("Multi-Metric Radar Chart")
@@ -506,7 +507,7 @@ elif page == "🤖 ML Models":
                               angularaxis=dict(color="#FAFAFA"),
                           ),
                           height=420)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)
 
     with tab2:
         if not artifacts_ready or not data_ready:
@@ -556,7 +557,7 @@ elif page == "🤖 ML Models":
                     title=f"Actual vs Predicted — {sel}",
                     height=460,
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig)
 
                 # Residuals
                 resid = y_te - y_pred
@@ -570,7 +571,7 @@ elif page == "🤖 ML Models":
                 fig2.update_layout(**DARK_TEMPLATE["layout"],
                                    xaxis_tickprefix="$", yaxis_tickprefix="$",
                                    height=350)
-                st.plotly_chart(fig2, use_container_width=True)
+                st.plotly_chart(fig2)
 
 
 # ══════════════════════════════════════════════════════════
@@ -619,7 +620,8 @@ elif page == "🔮 Predict Salary":
 
     st.markdown("---")
 
-    if st.button("🚀 Predict Salary", use_container_width=True, type="primary"):
+    if st.button("🚀 Predict Salary", width=True, type="primary"): 
+
         employee = {
             "age": age, "gender": gender,
             "education_level": edu,
@@ -679,7 +681,7 @@ elif page == "🔮 Predict Salary":
                     title=f"Salary Distribution — {dept} / {title} Peers",
                     xaxis_tickprefix="$", height=370,
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width=True)
 
 
 # ══════════════════════════════════════════════════════════
@@ -714,14 +716,14 @@ elif page == "🗂️ Data Explorer":
     st.subheader("Summary Statistics")
     st.dataframe(
         filtered.describe().round(2).T,
-        use_container_width=True,
+        width=True,
     )
 
     # Raw table
     st.subheader("Raw Data")
     st.dataframe(
         filtered.style.format({"salary": "${:,.0f}", "performance_score": "{:.1f}"}),
-        use_container_width=True,
+        width=True,
         height=400,
     )
 
@@ -732,5 +734,6 @@ elif page == "🗂️ Data Explorer":
         data=csv,
         file_name="filtered_employees.csv",
         mime="text/csv",
-        use_container_width=True,
+        width=True,
     )
+
