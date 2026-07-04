@@ -113,23 +113,6 @@ def get_model_catalogue():
         ),
     ]
 
-    # XGBoost (optional dependency)
-    try:
-        from xgboost import XGBRegressor
-        catalogue.append((
-            "XGBoost",
-            XGBRegressor(random_state=42, verbosity=0, n_jobs=-1),
-            {
-                "n_estimators":  [100, 200],
-                "learning_rate": [0.05, 0.10],
-                "max_depth":     [4, 6],
-            },
-        ))
-        print("  XGBoost detected — included in training run.")
-    except ImportError:
-        print("  XGBoost not installed — skipping.")
-
-    return catalogue
 
 
 # ── Core training function ───────────────────────────────
